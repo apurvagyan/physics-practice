@@ -14,7 +14,7 @@ public:
     current_ = current;
   }
   void SetGoal(ProfilePoint goal) { goal_ = goal; }
-  const double GetTime();
+  const double GetTime(bool ignore_maxv);
 
 private:
   ProfilePoint current_;
