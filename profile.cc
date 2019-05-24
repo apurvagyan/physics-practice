@@ -6,10 +6,10 @@ const double Profile::GetTime(bool ignore_maxv) {
     double t = current_.velocity + sqrt(current_.velocity * current_.velocity) + (2(*(kMaxAcceleration)*(dx))/(kMaxAcceleration);
     return t;
 
-  else {
-    t1 = (kMaxVelocity - current_.position) / kMaxAcceleration;
-    d1 = 1/2 * (kMaxAcceleration) * (kMaxVelocity - current_.velocity) / (kMaxAcceleration);
-    d2 = dx - (kMaxVelocity) * 2*d1;
+  } else {
+    t1 = (kMaxVelocity - current_.velocity) / kMaxAcceleration;
+    d1 = 1/2 * (kMaxAcceleration) * t1;
+    d2 = dx - (kMaxVelocity) * 2 * d1;
 
     tf = 2 * (t1 / kMaxAcceleration) + d2 / kMaxVelocity;
     return tf;
