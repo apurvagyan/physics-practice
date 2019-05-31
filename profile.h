@@ -1,22 +1,33 @@
 #ifndef PROFILE_H_
 #define PROFILE_H_
 
-constexpr kMaxVelocity = 1.0;
-constexpr kMaxAcceleration = 1.0;
+#include <cmath>
+
+constexpr double kMaxVelocity = 1.;
+constexpr double kMaxAcceleration = 1.;
 
 class Profile {
-public:
+ public:
+  double t1_;
+  double d1_;
+  double d2_;
+  double tf_;
+	 
   struct ProfilePoint {
-    double position = 0.0;
-    double velocity = 0.0;
+    double position = 0.;
+    double velocity = 0.;
   };
+  
   Profile(ProfilePoint current) {
     current_ = current;
   }
+  
   void SetGoal(ProfilePoint goal) { goal_ = goal; }
-  const double GetTime(bool ignore_maxv);
+  const double GetTime();
 
-private:
+  Profile::ProfilePoint GetSetpoint(double t);
+
+ private:
   ProfilePoint current_;
   ProfilePoint goal_;
 };
