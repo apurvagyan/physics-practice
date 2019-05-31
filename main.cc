@@ -12,6 +12,6 @@ int main() {
   profile.SetGoal(goal);
   double time = profile.GetTime();
   for (int i = 0; i <= int(time / .01); i++) {
-    std::cout << i * .01 << "," << profile.GetSetpoint(time) << std::endl;
+    std::cout << i * .01 << "," << profile.GetSetpoint(i * .01).position << "," << profile.GetSetpoint(i * .01).velocity << std::endl;
   }
 }
