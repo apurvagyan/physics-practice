@@ -9,8 +9,14 @@ constexpr double kMaxAcceleration = 1.;
 class Profile {
  public:
   double t1_;
+  double t3_;
+  
   double d1_;
+  double d3_;
+  
   double d2_;
+  double t2_;
+
   double tf_;
 	 
   struct ProfilePoint {

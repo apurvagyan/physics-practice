@@ -14,15 +14,22 @@ const double Profile::GetTime() {
     return t;
   } else {
     t1_ = (kMaxVelocity - current_.velocity) / kMaxAcceleration;
-    d1_ = 1/2 * kMaxAcceleration * t1_;
-    d2_ = dx - kMaxVelocity * 2 * d1_;
-    tf_ = 2 * (t1_ / kMaxAcceleration) + d2_ / kMaxVelocity;
+    t3_ = (kMaxVelocity - goal_.velocity) / kMaxAcceleration;
+    
+    d1_ = 1./2. * kMaxAcceleration * t1_;
+    d3_ = 1./2. * kMaxAcceleration * t3_;
+    
+    d2_ = dx - d1_ - d3_;
+    t2_ = d2_ / kMaxVelocity;
+    
+    tf_ = t1_ + t2_ + t3_;
+    
     return tf_;
   }
   return 0.;
 }
                                                                                   
-Profile::ProfilePoint GetSetpoint(double t) {
+Profile::ProfilePoint Profile::GetSetpoint(double t) {
   double c_velocity;
   double c_position;
   
@@ -30,7 +37,7 @@ Profile::ProfilePoint GetSetpoint(double t) {
   
   if (t > t1_) {
     c_velocity = current_.velocity + (kMaxAcceleration * t);
-    c_position = (c_velocity / 2) * t;
+    c_position = (c_velocity / 2.) * t;
     
     status.velocity = c_velocity;
     status.position = c_position;
@@ -44,7 +51,7 @@ Profile::ProfilePoint GetSetpoint(double t) {
     
   } else if (t1_ + t2_ < t && t < tf_) {
     c_velocity = kMaxVelocity - (kMaxAcceleration * t);
-    c_position = (c_velocity / 2) * t;
+    c_position = (c_velocity / 2.) * t;
     
     status.velocity = c_velocity;
     status.position = c_position;
